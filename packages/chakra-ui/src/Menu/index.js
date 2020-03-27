@@ -310,6 +310,10 @@ const MenuList = ({ onKeyDown, onBlur, ...props }) => {
     onBlur && onBlur(event);
   };
 
+  const { current: modifiers } = useRef({
+    preventOverflow: { enabled: true, boundariesElement: "viewport" },
+  });
+
   const styleProps = useMenuListStyle();
 
   return (
@@ -318,9 +322,7 @@ const MenuList = ({ onKeyDown, onBlur, ...props }) => {
       isOpen={isOpen}
       anchorEl={buttonRef.current}
       placement={placement}
-      modifiers={{
-        preventOverflow: { enabled: true, boundariesElement: "viewport" },
-      }}
+      modifiers={modifiers}
       minW="3xs"
       rounded="md"
       role="menu"

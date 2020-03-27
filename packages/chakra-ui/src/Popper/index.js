@@ -71,7 +71,7 @@ const Popper = forwardRef(
       modifiers,
       isOpen,
       placement: initialPlacement = "bottom",
-      popperOptions = {},
+      popperOptions,
       popperRef: popperRefProp,
       willUseTransition = false,
       arrowSize,
@@ -119,9 +119,10 @@ const Popper = forwardRef(
         setPlacement(data.placement);
       };
 
+      const _popperOptions = popperOptions || {};
       const popper = new PopperJS(getAnchorEl(anchorEl), popperNode, {
         placement: rtlPlacement,
-        ...popperOptions,
+        ..._popperOptions,
         modifiers: {
           ...(usePortal && {
             preventOverflow: {
@@ -129,11 +130,11 @@ const Popper = forwardRef(
             },
           }),
           ...modifiers,
-          ...popperOptions.modifiers,
+          ..._popperOptions.modifiers,
         },
         onUpdate: createChainedFunction(
           handlePopperUpdate,
-          popperOptions.onUpdate,
+          _popperOptions.onUpdate,
         ),
       });
       handlePopperRefRef.current(popper);
